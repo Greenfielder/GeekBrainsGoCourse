@@ -14,7 +14,7 @@ import (
 // отдаёт на выходе его же в отсортированном виде.
 func main() {
 	var numbers []int
-
+	fmt.Println("Введите числа через пробел: ")
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
 	numbers = stringToInt(scanner.Text())
