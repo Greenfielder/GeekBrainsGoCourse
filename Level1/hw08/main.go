@@ -25,6 +25,13 @@ var KafkaBroker = flag.String("kafkabroker", "", "Broker for Kafka")
 var SomeAppId = flag.String("someappid", "555", "Some AppId")
 var SomeAppKey = flag.String("someappkey", "unlock", "Some AppKey")
 
+// я сдаюсь... у меня не получается организовать пакеты.
+// сначала перенёс все файлы в соответствии с  корневыми директориями.
+// Теперь выдает "import cycle not allowed". Это при импорте в виде   _ "github.com/GreenFielder/GeekBrainsGoCourse/Level1/hw08",
+// если без нижней черты  перед импортом, то сразу пропадает.
+// Убилось просто два часа в пустую с этой организацией файлов.
+// Сделал всё тапорно и без валидации. Если подскажете как победить ошибку с пакетом, то обязательно доделаю.
+
 func main() {
 	flag.Parse()
 	fmt.Println("Server configuration: ")
