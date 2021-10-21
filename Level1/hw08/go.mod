@@ -1,3 +1,3 @@
-module github.com/GreenFielder/GeekBrainsGoCourse/Level1/hw08
+module green
 
 go 1.15
