@@ -9,24 +9,14 @@ import (
 	"log"
 )
 
-// mickey@mickey-pc:~/go/src/github.com/GreenFielder/GeekBrainsGoCourse/Level1/hw08$ ./main
-// 2021/10/21 22:42:29 &{8080 sql://user:password@greenfielder:443 555 unlock}
-// mickey@mickey-pc:~/go/src/github.com/GreenFielder/GeekBrainsGoCourse/Level1/hw08$ ./main -port 2020
-// flag provided but not defined: -port
-// Usage of ./main:
-// Разобрался с пакетами, то перерь не работает сама программа. Вернее как.
-// Я разбил на пакеты, всё вынес в конфиг.
-// Без флагов если запускать, то всё ок - выводит значения по умолчанию
-// А если с флагами, то вылетает с сообщением "flag provided but not defined: -port"
-// Я подозреваю что переменные надо вынести в init(), но тогда они видны только внутри инита.
-// Нужна помощь!
-
 func main() {
 	flag.Parse()
 
-	err, configure := config.LoadConfig()
+	configure, err := config.LoadConfig()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("some info", err)
 	}
-	fmt.Println("Server configuration: ", configure)
+	fmt.Println("Server configuration: ")
+	fmt.Printf(" Port: %d\n DB_url: %s\n SomeAppId: %s\n SomeAppKey: %s\n", configure.Port, configure.DbUrl,
+		configure.SomeAppId, configure.SomeAppKey)
 }

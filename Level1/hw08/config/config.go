@@ -11,26 +11,33 @@ type Configuration struct {
 	SomeAppKey string
 }
 
+var portInit *int
+var dbUrlInit *string
+var someAppIdInit *string
+var someAppKeyInit *string
+
+func init() {
+
+	portInit = flag.Int("port", 8080, "port to start server")
+	dbUrlInit = flag.String("dburl", "sql://user:password@greenfielder:443", "DataBase Url")
+	someAppIdInit = flag.String("someappid", "555", "Some AppId")
+	someAppKeyInit = flag.String("someappkey", "unlock", "Some AppKey")
+}
+
 func LoadConfig() (*Configuration, error) {
 
-	// var Port = flag.Int("port", 8080, "port to start server")
-	// var DbUrl = flag.String("dburl", "sql://user:password@greenfielder:443", "DataBase Url")
-	// var SomeAppId = flag.String("someappid", "555", "Some AppId")
-	// var SomeAppKey = flag.String("someappkey", "unlock", "Some AppKey")
-	// fmt.Println("Server configuration: ")
-	// fmt.Printf(" Port: %d\n DB_url: %s\n  SomeAppId: %s\n SomeAppKey: %s\n", *Port, *DbUrl, *SomeAppId, *SomeAppKey)
 	configuration := &Configuration{}
 
-	port := flag.Int("port", 8080, "port to start server")
+	port := portInit
 	configuration.Port = int(*port)
 
-	dbUrl := flag.String("dburl", "sql://user:password@greenfielder:443", "DataBase Url")
+	dbUrl := dbUrlInit
 	configuration.DbUrl = *dbUrl
 
-	someAppId := flag.String("someappid", "555", "Some AppId")
+	someAppId := someAppIdInit
 	configuration.SomeAppId = *someAppId
 
-	someAppKey := flag.String("someappkey", "unlock", "Some AppKey")
+	someAppKey := someAppKeyInit
 	configuration.SomeAppKey = *someAppKey
 
 	return configuration, nil
