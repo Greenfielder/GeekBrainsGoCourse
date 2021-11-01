@@ -1,0 +1,6 @@
+	{
+	"port": 8483,
+	"dburl": "sql://user:password@greenfielder:443",
+	"someappid": "067",
+	"someappkey": "UnLocked"
+	}
