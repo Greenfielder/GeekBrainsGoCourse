@@ -3,15 +3,27 @@ package game
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
+// function randomInt is a random int generator
+func randomInt(min, max int) int {
+	rand.Seed(time.Now().UnixNano())
+	if min > max {
+		return min
+	} else {
+		return rand.Intn(max-min) + min
+	}
+}
+
+// StartGame function, this is the logic of "guest number game"
 func StartGame() {
 	count := 0
 	guess := -1
-	number := rand.Intn(10)
+	number := randomInt(1, 11)
 
 	for count < 3 && guess != number {
-		fmt.Print("Отгадайте число в промежутке (0..9): ")
+		fmt.Println("Отгадайте число в промежутке (0..10): ")
 		fmt.Scanln(&guess)
 		if guess != number {
 
