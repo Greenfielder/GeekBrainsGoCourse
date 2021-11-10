@@ -14,17 +14,20 @@ func StartGame() {
 		fmt.Print("Отгадайте число в промежутке (0..9): ")
 		fmt.Scanln(&guess)
 		if guess != number {
-			if guess < number {
+
+			if guess > number {
 				fmt.Println("Загаданное число меньше")
-			} else {
+			} else if guess < number {
 				fmt.Println("Загаданное число больше")
 			}
 			count++
+
+		} else {
+			fmt.Println("Ты выиграл! :)")
 		}
-	}
-	if guess == number {
-		fmt.Println("Ты выиграл!")
-	} else {
-		fmt.Println("Ты проиграл...")
+
+		if count == 3 {
+			fmt.Println("Ты проиграл... :(")
+		}
 	}
 }
