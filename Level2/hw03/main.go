@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Start build the game")
+	fmt.Println("Добро пожаловать в игру ### Угадай число ###")
 	game.StartGame()
 }
