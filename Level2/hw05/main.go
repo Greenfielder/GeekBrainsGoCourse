@@ -29,7 +29,7 @@ func main() {
 	// 2. Реализуйте функцию для разблокировки мьютекса с помощью defer
 	var ms mymutex.Kit
 	ms = mymutex.NewRWMutexKit()
-	ms.Add(17)
-	fmt.Println("Set has 7?", ms.Has(7))
-	fmt.Println("Set has 17?", ms.Has(17))
+	ms.Add(50)
+	fmt.Println("Added 5 ?", ms.Has(5))
+	fmt.Println("Added 50 ?", ms.Has(50))
 }
