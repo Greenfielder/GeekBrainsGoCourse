@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"runtime/trace"
+	"log"
 	"sync"
+	"time"
 )
 
 type bankClient struct {
@@ -22,19 +22,48 @@ func newBankClient(name string, sun int) (*bankClient, error) {
 	return &bankClient{clientName: name, balance: sun}, nil
 }
 
-func doManeyOrder(m moneyOrder) {
+func (bc *bankClient) add(amount int) {
+	bc.Lock()
+	bc.balance += amount
+	time.Sleep(time.Second)
+	bc.Unlock()
+}
 
+func (bc *bankClient) debit(amount int) {
+	bc.Lock()
+	bc.balance -= amount
+	time.Sleep(time.Second)
+	bc.Unlock()
+}
+
+func (bc *bankClient) getBalance() int {
+	bc.Lock()
+	defer bc.Unlock()
+
+	return bc.balance
+}
+
+func doManeyOrder(bc *bankClient, m moneyOrder) {
 	if m.writeOff {
-		fmt.Println("списываем")
+		bc.debit(m.amount)
 	} else {
-		fmt.Println("начисляем")
+		bc.add(m.amount)
 	}
-
 }
 
 func main() {
 
-	trace.Start(os.Stderr)
-	defer trace.Stop()
+	// trace.Start(os.Stderr)
+	// defer trace.Stop()
+
+	client, err := newBankClient("John", 100000)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	order := moneyOrder{23000, true}
+	doManeyOrder(client, order)
+
+	fmt.Println(client.getBalance())
 
 }
