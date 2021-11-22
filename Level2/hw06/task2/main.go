@@ -13,6 +13,7 @@ func doSomething(wg *sync.WaitGroup) {
 	time.Sleep(time.Microsecond)
 }
 
+//Написать многопоточную программу, в которой будет использоваться явный вызов планировщика. Выполните трассировку программы
 func main() {
 	trace.Start(os.Stderr)
 	defer trace.Stop()
