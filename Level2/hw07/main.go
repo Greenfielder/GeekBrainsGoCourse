@@ -12,28 +12,33 @@ type In struct {
 }
 
 func customFunc(in In, values map[string]interface{}) error {
-	valuesOfStrust := reflect.ValueOf(&in)
-	elementOfIn := valuesOfStrust.Elem()
+	valuesOfStrust := reflect.ValueOf(&in).Elem()
 	rv := reflect.ValueOf(values)
 
-	for i := 0; i < elementOfIn.Type().NumField(); i++ {
-		tempName := elementOfIn.Type().Field(i).Name
-		newName := elementOfIn.FieldByName(tempName)
+	fmt.Println(valuesOfStrust.CanSet())
+	fmt.Println(valuesOfStrust.Field(0), valuesOfStrust.Field(1), valuesOfStrust.Field(2))
+
+	for i := 0; i < valuesOfStrust.Type().NumField(); i++ {
+		tempName := valuesOfStrust.Type().Field(i).Name
+		newName := valuesOfStrust.FieldByName(tempName)
 
 		for _, e := range rv.MapKeys() {
 			v := rv.MapIndex(e)
+			fmt.Print(v)
 			switch t := v.Interface().(type) {
-
-			case int:
-				if i == 1 {
-					newName.SetInt(int64(t))
-				}
 			case string:
 				if i == 0 {
+					fmt.Println(newName.CanSet())
 					newName.SetString(t)
+				}
+			case int:
+				if i == 1 {
+					fmt.Println(newName.CanSet())
+					newName.SetInt(int64(t))
 				}
 			case bool:
 				if i == 2 {
+					fmt.Println(newName.CanSet())
 					newName.SetBool(t)
 				}
 			default:
