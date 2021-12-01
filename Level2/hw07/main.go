@@ -12,39 +12,22 @@ type In struct {
 }
 
 func customFunc(in In, values map[string]interface{}) error {
-	valuesOfStrust := reflect.ValueOf(&in).Elem()
-	rv := reflect.ValueOf(values)
 
-	fmt.Println(valuesOfStrust.CanSet())
-	fmt.Println(valuesOfStrust.Field(0), valuesOfStrust.Field(1), valuesOfStrust.Field(2))
+	inStruct := reflect.ValueOf(&in).Elem()
 
-	for i := 0; i < valuesOfStrust.Type().NumField(); i++ {
-		tempName := valuesOfStrust.Type().Field(i).Name
-		newName := valuesOfStrust.FieldByName(tempName)
+	for i := 0; i < inStruct.Type().NumField(); i++ {
+		strKey := inStruct.Type().Field(i).Name
+		strValue := inStruct.FieldByName(strKey)
+		fmt.Println(strKey, strValue) // Здесь корректно выводит ключ и значение из структуры
 
-		for _, e := range rv.MapKeys() {
-			v := rv.MapIndex(e)
-			fmt.Print(v)
-			switch t := v.Interface().(type) {
-			case string:
-				if i == 0 {
-					fmt.Println(newName.CanSet())
-					newName.SetString(t)
-				}
-			case int:
-				if i == 1 {
-					fmt.Println(newName.CanSet())
-					newName.SetInt(int64(t))
-				}
-			case bool:
-				if i == 2 {
-					fmt.Println(newName.CanSet())
-					newName.SetBool(t)
-				}
-			default:
-				fmt.Println("not found")
+		for x, y := range values {
+			if x == strKey && strValue.Type().AssignableTo(reflect.TypeOf(y)) {
+				fmt.Println(y, strValue.CanSet()) // Здесь корректно выводит значение мапы и факт того, что к полю структуры можно присвоить значение
+				strValue.Set(reflect.ValueOf(y))
+				fmt.Println(strValue, " - new value") // тут все присваивается
 			}
 		}
+		fmt.Println(in) // Здесь видим, что структура полностью поменялась, но в мэйне мы видим, что ни чего не поменялось!!! :(((
 	}
 	return nil
 }
